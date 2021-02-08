@@ -26,6 +26,8 @@ store.subscribe(() => {
 });
 
 const render = Component => {
+  console.log('111',store)
+
   ReactDOM.render(
     //绑定redux、热加载
     <Provider store={store}>

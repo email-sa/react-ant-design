@@ -14,12 +14,20 @@ import {
   ContainerOutlined,
   MailOutlined,
 } from '@ant-design/icons';
+import { connect } from 'react-redux';
+
+
+// const mapStateToProps = state => ({
+//   // authToken: state.currentUser && state.currentUser.authToken,
+//   number: state.number
+// });
+
 
 const { Header, Footer, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
 
-export default class Home extends Component{
+class Home extends Component{
   constructor(props){
     super(props)
     this.state = {
@@ -79,3 +87,4 @@ export default class Home extends Component{
        ) 
     }
 }
+export default Home

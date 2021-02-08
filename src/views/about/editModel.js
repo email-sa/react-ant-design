@@ -5,10 +5,8 @@ import {
     Input,
     Checkbox,
     Radio,
-    Select,
     Modal } from 'antd';
 import {onFinish,onFinishFailed} from './model'
-import { FormInstance } from 'antd/lib/form';
  
 
 
@@ -38,18 +36,20 @@ const changeRadio = (e)=>{
   class ModelForm extends Component {
       constructor(props){
           super(props)
+          this.formRef=React.createRef()
           this.state={
               form:{}
           }
           
       }
-    componentDidUpdate(){
-      console.log('@', this)  
+      componentDidMount(){
+        this.formRef.current.setFieldsValue(this.props.data)
     }
-      
+    componentDidUpdate(prevProps,prevState){
+      this.formRef.current.setFieldsValue(this.props.data)
+    }
     
       render(){
-        // const [form] = Form.useForm();
   
         const changeCheckBox= (e) =>{
             console.log('值改变')
@@ -59,8 +59,8 @@ const changeRadio = (e)=>{
           <Form
             {...layout}
             name="basic"
-            // ref={formRef}
-            initialValues={this.props.data}
+            ref={this.formRef}
+            // initialValues={this.props.data}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >

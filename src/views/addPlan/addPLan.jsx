@@ -1,17 +1,26 @@
 import { Form, Input, Button, Checkbox } from 'antd';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {increment, 
+  decrement } from './../../store/actions'
 
-import { onFinish,onFinishFailed } from "./add.ts";
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+const mapStateToProps = state => {
+  console.log('state',state)
+  return({
+  number: state.counter
+})
 };
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
+const mapDispatchToProps=(dispatch, ownProps)=>{
+  console.log('dispatch',dispatch)
+  return {
+    increase: (...args) => dispatch(increment(...args)),
+    decrease: (...args) => dispatch(decrement(...args))
+  }
+}
 
-export default class AddPlan extends Component{
+
+ class AddPlan extends Component{
     constructor(props){
         super(props)
         this.state={
@@ -21,8 +30,9 @@ export default class AddPlan extends Component{
             }
         }
     }
+
     componentDidMount(){
-      const { store } = this.context;
+      console.log(this)
     }
 
     handlerClick() {
@@ -30,16 +40,14 @@ export default class AddPlan extends Component{
   }
 
     render(){
-    // const [form] = Form.useForm()
-const { store } = this.context;
-    const state = store.getState();
-    console.log('111',state)
         return (
             <div>
-              <div>111</div>
-              <Button onClick={()=>{this.handlerClick()}}>增加</Button>
-              <Button>减少</Button>
+              <div>{this.props.number}</div>
+              <Button onClick={()=>{this.props.increase()}}>增加</Button>
+              <Button onClick={()=>{this.props.decrease()}}>减少</Button>
             </div>
           );
     }
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPlan);
