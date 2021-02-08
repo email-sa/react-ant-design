@@ -36,31 +36,29 @@ const changeRadio = (e)=>{
   class ModelForm extends Component {
       constructor(props){
           super(props)
-          this.formRef=React.createRef()
           this.state={
               form:{}
           }
-          
+          this.formRef=React.createRef()
       }
       componentDidMount(){
-        this.formRef.current.setFieldsValue(this.props.data)
-    }
-    componentDidUpdate(prevProps,prevState){
+      // console.log('###',this.props)  
+        // this.props.setFormValues()
       this.formRef.current.setFieldsValue(this.props.data)
+
+      }
+    componentDidUpdate(){
+      this.formRef.current.setFieldsValue(this.props.data)
+      // this.props.setFormValues()
+
     }
     
       render(){
-  
-        const changeCheckBox= (e) =>{
-            console.log('值改变')
-        }
-        console.log('props',this.props,this.props.data.name)
         return (
           <Form
             {...layout}
             name="basic"
             ref={this.formRef}
-            // initialValues={this.props.data}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
@@ -81,10 +79,8 @@ const changeRadio = (e)=>{
               <Input.TextArea/>
             </Form.Item>
             <Form.Item label="爱好" name="like">
-                <CheckboxGroup options={likeOptions}   onChange={changeCheckBox} />
+                <CheckboxGroup options={likeOptions}/>
             </Form.Item>
-    
-            
           </Form>
         );
       }
@@ -92,36 +88,41 @@ const changeRadio = (e)=>{
   };
 
 
- const EditModel =(props)=>{
-    const {form} = Form.useForm()
+//  const EditModel =(props)=>{
+//   this.formRef=React.createRef()
        
-    console.log('this',props)
-    return(
-    <Modal title="Basic Modal" visible={props.visible} 
-        onOk={props.clickOk} onCancel={props.clickCancel}
-        cancelText="取消" okText="确定"
-      >
-        <ModelForm data={props.data} form={form}/>
-      </Modal>
-  )
-  }
-  export default EditModel
-// export default class  EditModel extends Component{
-//     constructor(props){
-//       super(props)
-      
-//     }
-//     render(){
-//     //    const {form} = Form.useForm()
-       
-//     //   console.log('this',this.props)
-//       return(
-//       <Modal title="Basic Modal" visible={this.props.visible} 
-//           onOk={this.props.clickOk} onCancel={this.props.clickCancel}
-//           cancelText="取消" okText="确定"
-//         >
-//           <ModelForm data={this.props.data} form={form}/>
-//         </Modal>
-//     )
-//     }
+//     console.log('this',props)
+//     return(
+//     <Modal title="Basic Modal" visible={props.visible} 
+//         onOk={props.clickOk()} onCancel={props.clickCancel}
+//         cancelText="取消" okText="确定"
+//       >
+//         <ModelForm data={props.data} form={form}/>
+//       </Modal>
+//   )
 //   }
+//   export default EditModel
+export default class  EditModel extends Component{
+    constructor(props){
+      super(props)
+      // this.formRef=React.createRef()
+      // this.setFormValues = this.setFormValue.bind(this)
+      
+    }
+    // setFormValues(){
+    //   this.formRef.current.setFieldsValue(this.props.data)
+    // }
+    render(){
+    //    const {form} = Form.useForm()
+       
+    //   console.log('this',this.props)
+      return(
+      <Modal title="Basic Modal" visible={this.props.visible} 
+          onOk={this.props.clickOk} onCancel={this.props.clickCancel}
+          cancelText="取消" okText="确定"
+        >
+          <ModelForm data={this.props.data} formRef={this.formRef} setFormValues={this.setFormValues}/>
+        </Modal>
+    )
+    }
+  }
